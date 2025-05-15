@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import { format } from "timeago.js";
 import CourseContentList from "../Course/CourseContentList";
-import { Elements } from "@stripe/react-stripe-js";
+// import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from "../Payment/CheckOutForm";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import { VscVerifiedFilled } from "react-icons/vsc";
 type Props = {
   data: any;
   stripePromise: any;
-  clientSecret: string;
+  client_secret: string;
   setRoute: any;
   setOpen: any;
 };
@@ -23,7 +23,7 @@ type Props = {
 const CourseDetails = ({
   data,
   stripePromise,
-  clientSecret,
+  client_secret,
   setRoute,
   setOpen: openAuthModal,
 }: Props) => {
@@ -44,6 +44,8 @@ const CourseDetails = ({
     user && user?.courses?.find((item: any) => item._id === data._id);
 
   const handleOrder = (e: any) => {
+    // if(user){
+    // console.log("handle order prints user info "+userData)}
     if (user) {
       setOpen(true);
     } else {
@@ -274,10 +276,19 @@ const CourseDetails = ({
                 />
               </div>
               <div className="w-full">
-                {stripePromise && clientSecret && (
-                  <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckOutForm setOpen={setOpen} data={data} user={user} refetch={refetch} />
-                  </Elements>
+                {console.log(`this is stripePromies ${stripePromise} and client_secret ${client_secret}`)}
+                {stripePromise  && (
+                  // <Elements stripe={stripePromise} options={{ clientSecret }}>
+                  //   <CheckOutForm setOpen={setOpen} data={data} user={user} refetch={refetch} />
+                  // </Elements>
+                  <CheckOutForm
+  setOpen={setOpen}
+  data={data}
+  user={user}
+  refetch={refetch}
+/>
+
+
                 )}
               </div>
             </div>
